@@ -41,6 +41,9 @@ Never commit `.env` files.
 
 ## Run with Docker
 
+> **Status: untested.** The Dockerfiles and `docker-compose.yml` have been written but never built or
+> run. The local (non-Docker) setup above is the one that has been verified end to end.
+
 ```bash
 docker compose up --build   # app on http://localhost:3000, API on http://localhost:8000
 ```
@@ -83,3 +86,8 @@ lines; clients rejoin them with `\n`. The stream ends with `data: [DONE]`; failu
 - Cached answers are keyed per user (`chat:{user_id}:{md5(query)}`) so one user never receives an
   answer built from another user's documents. They expire after one hour.
 - Scanned PDFs without a text layer are rejected (no OCR).
+- AI answers are rendered as markdown in the chat UI (bold, lists, links, code blocks). Raw HTML in
+  an answer is not rendered.
+- Verified so far: backend tests, and register / upload / streaming chat / delete in a browser with
+  a DOCX file. Not yet verified: Docker, PDF and PPTX uploads, drag-and-drop upload, the mobile
+  sidebar, and token-expiry handling.
