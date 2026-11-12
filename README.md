@@ -88,6 +88,8 @@ lines; clients rejoin them with `\n`. The stream ends with `data: [DONE]`; failu
 - Scanned PDFs without a text layer are rejected (no OCR).
 - AI answers are rendered as markdown in the chat UI (bold, lists, links, code blocks). Raw HTML in
   an answer is not rendered.
-- Verified so far: backend tests, and register / upload / streaming chat / delete in a browser with
-  a DOCX file. Not yet verified: Docker, PDF and PPTX uploads, drag-and-drop upload, the mobile
-  sidebar, and token-expiry handling.
+- Timestamps are stored in UTC; the frontend converts them to the browser's local time.
+- Verified so far: backend tests, and in a browser: register, login, DOCX / PDF / PPTX upload (click
+  and drag-and-drop), streaming chat with correct answers from each file type, delete, the dark
+  theme toggle, the mobile sidebar and the redirect to login on an invalid token. Not yet verified:
+  Docker.

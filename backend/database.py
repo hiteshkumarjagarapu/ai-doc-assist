@@ -1,6 +1,7 @@
 """Async SQLAlchemy 2.0 engine, session factory and declarative Base (MySQL)."""
 
 from collections.abc import AsyncGenerator
+from datetime import datetime, timezone
 
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -25,6 +26,11 @@ engine = create_async_engine(
 )
 
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+
+
+def utcnow() -> datetime:
+    """Current UTC time as a naive datetime (stored in MySQL DATETIME columns, always UTC)."""
+    return datetime.now(timezone.utc).replace(tzinfo=None)
 
 
 class Base(DeclarativeBase):

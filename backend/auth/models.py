@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy import DateTime, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-from database import Base
+from database import Base, utcnow
 
 
 class User(Base):
@@ -18,4 +18,4 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(120))
     hashed_password: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(String(20), default="user")
-    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow, server_default=func.now())
