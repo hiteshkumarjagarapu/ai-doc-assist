@@ -44,9 +44,10 @@ Never commit `.env` files.
 > **Status: verified.** Built and run with Docker Desktop (Docker 29, Compose v5). Against the running
 > containers, these were tested through the API: register and login, PDF and PPTX upload, streaming
 > chat with correct answers, the answer cache, chat history, delete, and data persisting across a
-> backend restart. The frontend container serves the app (including reloads of `/chat/<id>`) and the
-> CORS preflight from `http://localhost:3000` succeeds. The UI itself was driven in a browser only
-> against the local dev setup, not against the containers.
+> backend restart. The UI was also driven in a browser at `http://localhost:3000` against the
+> containers: register, drag-and-drop upload of a PDF and a PPTX, streaming chat with an answer
+> combining both files (rendered as markdown), reloading a `/chat/<id>` link with its history, the
+> dark theme toggle, delete, and the redirect to login on an invalid token.
 
 Before the first run you need `backend/.env` (see Configuration) and `MYSQL_ROOT_PASSWORD` in a
 project-root `.env`. The first upload and first question download the embedding and reranker models
@@ -100,5 +101,5 @@ lines; clients rejoin them with `\n`. The stream ends with `data: [DONE]`; failu
 - Verified so far: backend tests, and in a browser: register, login, DOCX / PDF / PPTX upload (click
   and drag-and-drop), streaming chat with correct answers from each file type, delete, the dark
   theme toggle, the mobile sidebar and the redirect to login on an invalid token. The Docker setup
-  is verified at the API level (see above). Not yet done: driving the browser UI against the
-  containers.
+  is verified through the API and in the browser (see above). The mobile sidebar was only checked
+  against the local dev server.
