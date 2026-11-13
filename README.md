@@ -41,8 +41,16 @@ Never commit `.env` files.
 
 ## Run with Docker
 
-> **Status: untested.** The Dockerfiles and `docker-compose.yml` have been written but never built or
-> run. The local (non-Docker) setup above is the one that has been verified end to end.
+> **Status: verified.** Built and run with Docker Desktop (Docker 29, Compose v5). Against the running
+> containers, these were tested through the API: register and login, PDF and PPTX upload, streaming
+> chat with correct answers, the answer cache, chat history, delete, and data persisting across a
+> backend restart. The frontend container serves the app (including reloads of `/chat/<id>`) and the
+> CORS preflight from `http://localhost:3000` succeeds. The UI itself was driven in a browser only
+> against the local dev setup, not against the containers.
+
+Before the first run you need `backend/.env` (see Configuration) and `MYSQL_ROOT_PASSWORD` in a
+project-root `.env`. The first upload and first question download the embedding and reranker models
+(about 200MB); they are kept in the `hf_cache` volume so rebuilds do not download them again.
 
 ```bash
 docker compose up --build   # app on http://localhost:3000, API on http://localhost:8000
@@ -91,5 +99,6 @@ lines; clients rejoin them with `\n`. The stream ends with `data: [DONE]`; failu
 - Timestamps are stored in UTC; the frontend converts them to the browser's local time.
 - Verified so far: backend tests, and in a browser: register, login, DOCX / PDF / PPTX upload (click
   and drag-and-drop), streaming chat with correct answers from each file type, delete, the dark
-  theme toggle, the mobile sidebar and the redirect to login on an invalid token. Not yet verified:
-  Docker.
+  theme toggle, the mobile sidebar and the redirect to login on an invalid token. The Docker setup
+  is verified at the API level (see above). Not yet done: driving the browser UI against the
+  containers.
